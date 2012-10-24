@@ -36,9 +36,28 @@
 return array(
 
 	'docs' => array('handles' => 'docs'),
+    'base' => array(
+        'location' => 'frontend/base',
+        'autoloads' => array(
+            'namespaces' => array(
+                'Base' => '(:bundle)/models',
+            ),
+            'directories' => array(
+                '(:bundle)/models',
+            ),
+        ),
+    ),
 	'signup' => array(
         'location' => 'frontend/signup',
         'handles' => 'signup',
+        'autoloads' => array(
+            'namespaces' => array(
+                'Signup' => '(:bundle)/models',
+            ),
+            'directories' => array(
+                '(:bundle)/models',
+            ),
+        ),
     ),
 
 );
