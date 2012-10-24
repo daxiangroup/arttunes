@@ -36,5 +36,9 @@
 return array(
 
 	'docs' => array('handles' => 'docs'),
+	'signup' => array(
+        'location' => 'frontend/signup',
+        'handles' => 'signup',
+    ),
 
 );
