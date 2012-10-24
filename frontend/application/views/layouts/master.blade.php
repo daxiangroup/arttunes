@@ -14,7 +14,6 @@
 
         {{ HTML::style('css/bootstrap.min.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
-        {{ HTML::style('css/main.css') }}
     </head>
     <body>
         <div class="container">
