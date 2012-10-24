@@ -3,6 +3,7 @@
 namespace Signup\Services;
 
 use \Auth;
+use \Input;
 
 class Signup extends \Base\Service
 {
@@ -32,6 +33,7 @@ class Signup extends \Base\Service
         $form_data = array(
             'signup-first-name' => array(
                 'name' => 'signup-first-name',
+                'value' => Input::old('signup-first-name'),
                 'extra' => array(
                     'id'=>'signup-first-name',
                     'autofocus'=>'',
@@ -42,12 +44,14 @@ class Signup extends \Base\Service
             ),
             'signup-last-name' => array(
                 'name' => 'signup-last-name',
+                'value' => Input::old('signup-last-name'),
                 'extra' => array('id'=>'signup-last-name'),
                 'target' => 'signup-last-name',
                 'label' => 'Last Name',
             ),
             'signup-email' => array(
                 'name' => 'signup-email',
+                'value' => Input::old('signup-email'),
                 'extra' => array('id'=>'signup-email'),
                 'target' => 'signup-email',
                 'label' => 'Email',
@@ -62,7 +66,6 @@ class Signup extends \Base\Service
         );
 
         $this->_form_data = $this->massage_form_data($form_data);
-        return $this->_form_data;
     }
 
     protected function prepare_validation()

@@ -2,7 +2,7 @@
 
 @section('content') 
 <div id="cntr-signup">
-    {{ Form::open('/signup') }} 
+    {{ Form::open('/signup/creator') }} 
     {{ Form::token() }} 
 
     <div class="row">
@@ -24,6 +24,11 @@
     <div class="row">
         <div class="span2">{{ Form::label($form_data['signup-general-statement']['target'], $form_data['signup-general-statement']['label']) }}</div>
         <div class="span3">{{ Form::text($form_data['signup-general-statement']['name'], $form_data['signup-general-statement']['value'], $form_data['signup-general-statement']['extra']) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="span2"></div>
+        <div class="span3">{{ Form::submit($form_data['btn-submit']['value'], $form_data['btn-submit']['extra']) }}</div>
     </div>
 
     {{ Form::close() }} 
