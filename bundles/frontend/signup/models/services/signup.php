@@ -7,6 +7,9 @@ use \Input;
 
 class Signup extends \Base\Service
 {
+    protected $_validation_rules    = array();
+    protected $_validation_messages = array();
+
     public static function form($error_object=null)
     {
         $_instance = new self;
@@ -35,7 +38,6 @@ class Signup extends \Base\Service
                 'name' => 'signup-first-name',
                 'value' => Input::old('signup-first-name'),
                 'extra' => array(
-                    'id'=>'signup-first-name',
                     'autofocus'=>'',
                     'class'=>(isset($error_object['signup-first-name']) ? 'error' : '')
                 ),
@@ -45,17 +47,52 @@ class Signup extends \Base\Service
             'signup-last-name' => array(
                 'name' => 'signup-last-name',
                 'value' => Input::old('signup-last-name'),
-                'extra' => array('id'=>'signup-last-name'),
                 'target' => 'signup-last-name',
                 'label' => 'Last Name',
             ),
             'signup-email' => array(
                 'name' => 'signup-email',
                 'value' => Input::old('signup-email'),
-                'extra' => array('id'=>'signup-email'),
                 'target' => 'signup-email',
                 'label' => 'Email',
+            ),
+            'signup-password' => array(
+                'name' => 'signup-password',
+                'target' => 'signup-password',
+                'label' => 'Password',
+            ),
+            'signup-password-verify' => array(
+                'name' => 'signup-password-verify',
+                'target' => 'signup-password-verify',
+                'label' => 'Verify Password',
             ),            
+            'signup-type-1' => array(
+                'name' => 'signup-type',
+                'value' => bndlSIGNUP_ArtLover,
+                'checked' => (Input::old('signup-type') == bndlSIGNUP_ArtLover || !Input::has('signup-type') ? true : false),
+                'extra' => array('id' => 'signup-type-1'),
+                'target' => 'signup-type-1',
+                'label' => 'Art Lover',
+            ),
+            'signup-type-2' => array(
+                'name' => 'signup-type',
+                'value' => bndlSIGNUP_ArtCreator,
+                'checked' => (Input::old('signup-type') == bndlSIGNUP_ArtCreator ? true : false),
+                'extra' => array('id' => 'signup-type-2'),
+                'target' => 'signup-type-2',
+                'label' => 'Creator',
+            ),
+            'signup-about-me' => array(
+                'name' => 'signup-about-me',
+                'target' => 'signup-about-me',
+                'label' => 'About Me',
+            ),
+            'signup-general-statement' => array(
+                'name' => 'signup-general-statement',
+                'target' => 'signup-general-statement',
+                'label' => 'General Artist Statement',
+            ),
+
 
             'btn-submit'   => array(
                 'value'   => 'Signup',
@@ -70,27 +107,30 @@ class Signup extends \Base\Service
 
     protected function prepare_validation()
     {
-        // Custom validation rule to verify that the current password being
-        // entered matches the user logged in
-//        \Validator::register('current_password', function() use ($input) {
-//            return \Hash::check($input['password-current'], \Auth::user()->password);
-//        });
-
         // Create the rules to validation this object
-        $this->_validation_rules = array(
-            'signup-first-name' => 'required',
-            /*
-            'password-current' => 'required|current_password',
-            'password-new'     => 'required|different:password-current',
-            'password-verify'  => 'required|same:password-new',
-            */
+        $validation_rules = array(
+            'signup-first-name'        => 'required|alpha',
+            'signup-last-name'         => 'required|alpha',
+            'signup-email'             => 'required|email',
+            'signup-password'          => 'required',
+            'signup-password-verify'   => 'required|same:signup-password',
+            'signup-about-me'          => 'required|alpha_dash',
+            'signup-general-statement' => 'required|alpha_dash',
         );
 
         // Custom error messages for this validation
-        $this->_validation_messages = array(
-            'current_password' => 'Current password does not match our records',
-            'different'        => 'Your new passowrd must be different than your current password',
+        $validation_messages = array(
             'same'             => 'Your new password must match the verification',
         );
+
+        // If the user is signing up as an 'Art Lover', we want to remove the 
+        // validation rules for an 'Art Creator', as they don't apply...
+        if (Input::get('signup-type') == bndlSIGNUP_ArtLover) {
+            unset($validation_rules['signup-about-me']);
+            unset($validation_rules['signup-general-statement']);
+        }
+
+        $this->_validation_rules    = $validation_rules;
+        $this->_validation_messages = array();
     }
 }

@@ -24,7 +24,7 @@ class Service
         return true;
     }
 
-    public function validate($input=null, $rules=null, $messages=null)
+    public function validate($input=null, $rules=null, $messages=array())
     {
         // If the $input variable is null, automatically set it to Input::all().
         if (is_null($input)) {
@@ -45,7 +45,7 @@ class Service
 
         // If $messages is null or it's an empty array AND the object's messages is
         // not null and not empty, set the messages value to the object's messages.
-        if ((is_null($messages) || count($messages) === 0) && !is_null($this->_validation_messages) 
+        if ((count($messages) === 0) && !is_null($this->_validation_messages) 
             && count($this->_validation_messages) !== 0) {
             $messages = $this->_validation_messages;
         }

@@ -14,6 +14,7 @@
 
         {{ HTML::style('css/bootstrap.min.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
+        @yield('page-specific-css')
     </head>
     <body>
         <div class="container">
@@ -25,5 +26,6 @@
         </div>
 
         {{ HTML::script('js/jquery-1.8.1-min.js') }}
+        @yield('page-specific-js')
     </body>
 </html>
