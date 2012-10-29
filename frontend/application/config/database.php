@@ -42,7 +42,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'application_r',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -61,22 +61,26 @@ return array(
 
 	'connections' => array(
 
-		'sqlite' => array(
-			'driver'   => 'sqlite',
-			'database' => 'application',
-			'prefix'   => '',
-		),
-
-		'mysql' => array(
+		'application_r' => array(
 			'driver'   => 'mysql',
 			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
+			'database' => 'application',
+			'username' => 'application_r',
+			'password' => 'wh4t3v3r',
+			'charset'  => 'utf8',
+			'prefix'   => '',
+		),
+		'application_w' => array(
+			'driver'   => 'mysql',
+			'host'     => 'localhost',
+			'database' => 'application',
+			'username' => 'application_w',
+			'password' => 'wh4t3v3r',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 		),
 
+		/*
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
@@ -96,7 +100,7 @@ return array(
 			'password' => '',
 			'prefix'   => '',
 		),
-
+		*/
 	),
 
 	/*

@@ -47,12 +47,36 @@ return array(
             ),
         ),
     ),
-	'signup' => array(
+    'login' => array(
+        'location' => 'frontend/login',
+        'handles' => 'login',
+        'autoloads' => array(
+            'namespaces' => array(
+                'Login' => '(:bundle)/models',
+            ),
+            'directories' => array(
+                '(:bundle)/models',
+            ),
+        ),
+    ),
+    'signup' => array(
         'location' => 'frontend/signup',
         'handles' => 'signup',
         'autoloads' => array(
             'namespaces' => array(
                 'Signup' => '(:bundle)/models',
+            ),
+            'directories' => array(
+                '(:bundle)/models',
+            ),
+        ),
+    ),
+    'dashboard' => array(
+        'location' => 'frontend/dashboard',
+        'handles' => 'dashboard',
+        'autoloads' => array(
+            'namespaces' => array(
+                'Dashboard' => '(:bundle)/models',
             ),
             'directories' => array(
                 '(:bundle)/models',
