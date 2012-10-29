@@ -35,6 +35,10 @@ class Utility
                 $data['checked'] = '';
             }
 
+            if (!isset($data['target'])) {
+                $data['target'] = $data['extra']['id'];
+            }
+
             $form_data[$key] = $data;
         }
 
