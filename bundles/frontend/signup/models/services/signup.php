@@ -7,15 +7,11 @@ use \Input;
 
 class Signup extends \Base\Service
 {
-    protected $_validation_rules    = array();
-    protected $_validation_messages = array();
-
     public static function form($error_object=null)
     {
         $_instance = new self;
 
         $_instance->prepare_form_data($error_object);
-        $_instance->prepare_validation();
 
         return $_instance;
     }
@@ -103,34 +99,5 @@ class Signup extends \Base\Service
         );
 
         $this->_form_data = $this->massage_form_data($form_data);
-    }
-
-    protected function prepare_validation()
-    {
-        // Create the rules to validation this object
-        $validation_rules = array(
-            'signup-first-name'        => 'required|alpha',
-            'signup-last-name'         => 'required|alpha',
-            'signup-email'             => 'required|email',
-            'signup-password'          => 'required',
-            'signup-password-verify'   => 'required|same:signup-password',
-            'signup-about-me'          => 'required|alpha_dash',
-            'signup-general-statement' => 'required|alpha_dash',
-        );
-
-        // Custom error messages for this validation
-        $validation_messages = array(
-            'same'             => 'Your new password must match the verification',
-        );
-
-        // If the user is signing up as an 'Art Lover', we want to remove the 
-        // validation rules for an 'Art Creator', as they don't apply...
-        if (Input::get('signup-type') == bndlSIGNUP_ArtLover) {
-            unset($validation_rules['signup-about-me']);
-            unset($validation_rules['signup-general-statement']);
-        }
-
-        $this->_validation_rules    = $validation_rules;
-        $this->_validation_messages = array();
     }
 }

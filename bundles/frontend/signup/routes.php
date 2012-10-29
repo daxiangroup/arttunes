@@ -7,9 +7,8 @@ Route::get('(:bundle)', function() {
     return View::make('signup::signup')
         ->with('form_data', $form_data);
 });
-Route::post('(:bundle)', function() {
-    $validation = Signup\Services\Signup::form()
-        ->validate();
+Route::post('(:bundle)', array('before'=>'csrf', function() {
+    $validation = Signup\Services\SignupValidator::make();
 
     if ($validation->fails()) {
         return \Redirect::to('/signup')
@@ -18,9 +17,13 @@ Route::post('(:bundle)', function() {
             ->with('errors', $validation->errors->messages);
     }
 
-//    \Account\Repositories\Account::save_password();
-//    Signup\Repositories\Signup::save();
+    $success = Signup\Repositories\Signup::save();
+
+    if (!$success['success']) {
+        return \Redirect::to('/signup')
+            ->with('errors', $success);
+    }
 
     return Redirect::to('/dashboard')
         ->with('success', 'save');
-});
+}));
