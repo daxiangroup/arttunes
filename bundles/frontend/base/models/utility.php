@@ -39,6 +39,10 @@ class Utility
                 $data['target'] = $data['extra']['id'];
             }
 
+            if (!isset($data['extra']['autocomplete'])) {
+                $data['extra']['autocomplete'] = 'off';
+            }
+
             $form_data[$key] = $data;
         }
 
