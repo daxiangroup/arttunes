@@ -83,5 +83,17 @@ return array(
             ),
         ),
     ),
+    'profile' => array(
+        'location' => 'frontend/profile',
+        'handles' => 'profile',
+        'autoloads' => array(
+            'namespaces' => array(
+                'Profile' => '(:bundle)/models',
+            ),
+            'directories' => array(
+                '(:bundle)/models',
+            ),
+        ),
+    ),
 
 );
