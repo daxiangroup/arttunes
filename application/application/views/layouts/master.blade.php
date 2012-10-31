@@ -14,6 +14,7 @@
 
         {{ HTML::style('css/bootstrap.min.css') }}
         {{ HTML::style('css/bootstrap-responsive.css') }}
+        {{ HTML::style('css/rtoya.css') }}
         @yield('page-specific-css')
     </head>
     <body>

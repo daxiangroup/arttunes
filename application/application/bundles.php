@@ -37,7 +37,7 @@ return array(
 
 	'docs' => array('handles' => 'docs'),
     'base' => array(
-        'location' => 'frontend/base',
+        'location' => 'application/base',
         'autoloads' => array(
             'namespaces' => array(
                 'Base' => '(:bundle)/models',
@@ -48,7 +48,7 @@ return array(
         ),
     ),
     'login' => array(
-        'location' => 'frontend/login',
+        'location' => 'application/login',
         'handles' => 'login',
         'autoloads' => array(
             'namespaces' => array(
@@ -60,7 +60,7 @@ return array(
         ),
     ),
     'signup' => array(
-        'location' => 'frontend/signup',
+        'location' => 'application/signup',
         'handles' => 'signup',
         'autoloads' => array(
             'namespaces' => array(
@@ -72,7 +72,7 @@ return array(
         ),
     ),
     'dashboard' => array(
-        'location' => 'frontend/dashboard',
+        'location' => 'application/dashboard',
         'handles' => 'dashboard',
         'autoloads' => array(
             'namespaces' => array(
@@ -84,7 +84,7 @@ return array(
         ),
     ),
     'profile' => array(
-        'location' => 'frontend/profile',
+        'location' => 'application/profile',
         'handles' => 'profile',
         'autoloads' => array(
             'namespaces' => array(
