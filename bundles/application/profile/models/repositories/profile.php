@@ -10,12 +10,6 @@ use \Hash;
 use \Input;
 
 class Profile extends \Base\Repository {
-    static $_id           = null;
-    static $_profile_data = array(
-        'first_name' => '',
-        'last_name' => '',
-        'email' => '',
-    );
 
     public static function get($id)
     {
@@ -49,24 +43,22 @@ class Profile extends \Base\Repository {
     */
     public static function get_id_from_username($username)
     {
+        // Initialize response
         $data = false;
 
+        // Try to get what we want
         try {
             $data = DB::connection('application_r')
                 ->table('accounts')
                 ->where('username', '=', $username)
                 ->only('id');
-        } catch (\Exception $e) {
+        } 
+        // Thow an exception if we have a DB problem 
+        catch (\Exception $e) {
             ErrorApi::exception('Database Problem: '.$e->getMessage());
         }
 
-/*
-        if ($data === false || is_null($data) || !count($data)) {
-            ErrorApi::log('Could not resolve id for username: '.$data);
-            return false;
-        }
-*/
-
+        // Returning our data-grab.
         return $data;
     }
 
@@ -76,27 +68,6 @@ public static function debug()
             die('<pre>'.print_r(debug_backtrace(),true).'</pre>');
 
 }
-    public static function get_profile_data($id)
-    {
-        $data = false;
-
-        try {
-            $data = DB::connection('application_r')
-                ->table('accounts')
-                ->where('id', '=', $id)
-                ->first();
-        } catch (\Exception $e) {
-            die('<pre>'.print_r($e,true));
-        }
-
-        if ($data === false || is_null($data) || !count($data)) {
-            throw new \InvalidArgumentException('testing exception throwing');
-            $data = self::$_profile_data;
-        }
-
-        self::$_id = $id;
-        self::$_profile_data = (array) $data;
-    }
 
     public static function save($input=null)
     {
