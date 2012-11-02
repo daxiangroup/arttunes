@@ -5,11 +5,11 @@ use \Profile\Services\Profile AS ProfileService;
 Route::group(array('before'=>'auth'), function() {
     // Temporary route, this will likely be rewritten. For now, it redirects to
     // the logged in user's galleries.
-    Route::get('(:bundle)', function() {
+    Route::get('/galleries', function() {
         return Redirect::to('/galleries/'.Auth::user()->username);
     });
 
-    Route::get('(:bundle)/(:any)', function() {
+    Route::get('/galleries/(:any)', function() {
         $success = ProfileService::get_id_from_username(URI::segment(2));
 
         if (!$success['success']) {

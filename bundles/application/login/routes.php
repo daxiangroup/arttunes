@@ -1,5 +1,5 @@
 <?php
-Route::get('(:bundle)', function() {
+Route::get('/login', function() {
     // Get the form data
     $form_data = Login\Services\Login::form(Session::get('errors'))
         ->get();
@@ -7,7 +7,7 @@ Route::get('(:bundle)', function() {
     return View::make('login::login')
         ->with('form_data', $form_data);
 });
-Route::post('(:bundle)', array('before'=>'csrf', function() {
+Route::post('/login', array('before'=>'csrf', function() {
     $validation = Login\Services\LoginValidator::make();
 
     if ($validation->fails()) {
@@ -22,7 +22,6 @@ Route::post('(:bundle)', array('before'=>'csrf', function() {
     if (Auth::attempt($credentials)) {
         return Redirect::to('/dashboard');
     }
-
 
     return Redirect::to('/login');
 }));

@@ -1,5 +1,5 @@
 <?php
-Route::get('(:bundle)', function() {
+Route::get('/signup', function() {
     // Get the form data
     $form_data = Signup\Services\Signup::form(Session::get('errors'))
         ->get();
@@ -7,7 +7,7 @@ Route::get('(:bundle)', function() {
     return View::make('signup::signup')
         ->with('form_data', $form_data);
 });
-Route::post('(:bundle)', array('before'=>'csrf', function() {
+Route::post('/signup', array('before'=>'csrf', function() {
     $validation = Signup\Services\SignupValidator::make();
 
     if ($validation->fails()) {
