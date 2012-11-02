@@ -12,6 +12,38 @@ class Profile
     {
         return ProfileRepository::get($id);
     }
+
+    // Receives a username to translate to an id. If the value received is already
+    // an integer, it is simply returned, as there is no translation to do.
+    public static function get_id_from_username($data)
+    {
+        // Received an integer, simply format the return and blast it off.
+        if (is_numeric($data)) {
+            return array(
+                'success' => true,
+                'code' => 0,
+                'payload' => $data,
+            );            
+        }
+
+        if (!$id = ProfileRepository::get_id_from_username($data)) {
+            return array(
+                'success' => false,
+                'code' => 1,
+                'payload' => null,
+            );
+        }
+
+        return array(
+            'success' => true,
+            'code' => 0,
+            'payload' => $id,
+        );
+    }
+
+
+
+
     /*
     public static function details($id=null)
     {

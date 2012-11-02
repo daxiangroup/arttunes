@@ -31,12 +31,34 @@ class Profile extends \Base\Repository {
         }
 
         if ($data === false || is_null($data) || !count($data)) {
-            ErrorApi::log('Testing exception throwing', 'InvalidArgumentException');
-            //throw new \InvalidArgumentException(__CLASS__.'::'.__FUNCTION__.' testing exception throwing');
+            ErrorApi::exception('Testing exception throwing', 'InvalidArgumentException');
         }
 
         return new ProfileEntity((array)$data);
     }
+
+    // Receiving a username to resolve to an id
+    public static function get_id_from_username($username)
+    {
+        $data = false;
+
+        try {
+            $data = DB::connection('application_r')
+                ->table('accounts')
+                ->where('username', '=', $username)
+                ->only('id');
+        } catch (\Exception $e) {
+            die('<pre>'.print_r($e,true));
+        }
+
+        if ($data === false || is_null($data) || !count($data)) {
+            ErrorApi::log('Could not resolve id for username: '.$data);
+            return false;
+        }
+
+        return $data;
+    }
+
 
 public static function debug()
 {
@@ -98,20 +120,4 @@ public static function debug()
             );
         }
     }
-/*
-    public static function save_password($input=null)
-    {
-        if ($input === null) {
-            $input = \Input::all();
-        }
-
-        $affected = \DB::table('users')
-            ->where('id', '=', $input['user-id'])
-            ->update(array(
-                'password' => \Hash::make($input['password-new']),
-            ));
-
-        return $affected;
-    }
-*/
 }
