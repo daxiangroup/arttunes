@@ -4,7 +4,7 @@ namespace Base;
 
 class ErrorApi
 {
-    public static function log($message='', $type='Exception')
+    public static function exception($message='', $type='Exception')
     {
         $backtrace = debug_backtrace();
         array_shift($backtrace);
@@ -26,5 +26,10 @@ class ErrorApi
             case 'Exception': throw new \Exception($parsed); break;
             case 'InvalidArgumentException': throw new \InvalidArgumentException($parsed); break;
         }
-    }    
+    }
+
+    public static function log($message='')
+    {
+        
+    }
 }
