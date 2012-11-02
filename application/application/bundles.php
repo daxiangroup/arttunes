@@ -95,5 +95,17 @@ return array(
             ),
         ),
     ),
+    'galleries' => array(
+        'location' => 'application/galleries',
+        'handles' => 'galleries',
+        'autoloads' => array(
+            'namespaces' => array(
+                'Galleries' => '(:bundle)/models',
+            ),
+            'directories' => array(
+                '(:bundle)/models',
+            ),
+        ),
+    ),
 
 );
