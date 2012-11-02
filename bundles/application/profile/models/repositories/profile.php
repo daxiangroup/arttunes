@@ -37,7 +37,16 @@ class Profile extends \Base\Repository {
         return new ProfileEntity((array)$data);
     }
 
-    // Receiving a username to resolve to an id
+    /*
+    |--------------------------------------------------------------------------
+    | get_id_from_username()
+    |--------------------------------------------------------------------------
+    | Receives a username in a string format and does a lookup on the DB to find
+    | the id associated with that username.
+    |
+    | @param:     $username - the username to look up
+    | @return:    integer
+    */
     public static function get_id_from_username($username)
     {
         $data = false;
@@ -48,13 +57,15 @@ class Profile extends \Base\Repository {
                 ->where('username', '=', $username)
                 ->only('id');
         } catch (\Exception $e) {
-            die('<pre>'.print_r($e,true));
+            ErrorApi::exception('Database Problem: '.$e->getMessage());
         }
 
+/*
         if ($data === false || is_null($data) || !count($data)) {
             ErrorApi::log('Could not resolve id for username: '.$data);
             return false;
         }
+*/
 
         return $data;
     }

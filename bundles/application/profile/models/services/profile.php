@@ -13,8 +13,17 @@ class Profile
         return ProfileRepository::get($id);
     }
 
-    // Receives a username to translate to an id. If the value received is already
-    // an integer, it is simply returned, as there is no translation to do.
+    /*
+    |--------------------------------------------------------------------------
+    | get_id_from_username()
+    |--------------------------------------------------------------------------
+    | Receives a username to translate into an id. If the value received is already
+    | an integer, we simply format the response and send back the id, as there is
+    | no translation needed. 
+    |
+    | @param:     $data - the username/id to look up
+    | @return:    integer
+    */
     public static function get_id_from_username($data)
     {
         // Received an integer, simply format the return and blast it off.
@@ -26,7 +35,13 @@ class Profile
             );            
         }
 
-        if (!$id = ProfileRepository::get_id_from_username($data)) {
+        // Attempt to get the id from the repository
+        $id = ProfileRepository::get_id_from_username($data);
+
+        // If the $id returned is false, null or 0, we want to log the error
+        // and return a false response.
+        if ($id === false || is_null($id) || $id === 0) {
+            ErrorApi::log('Could not resolve id for username: '.$data);
             return array(
                 'success' => false,
                 'code' => 1,
@@ -34,6 +49,8 @@ class Profile
             );
         }
 
+        // At this point, everything was awesome and we've got our id, so let's
+        // return a success response.
         return array(
             'success' => true,
             'code' => 0,
