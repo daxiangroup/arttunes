@@ -3,31 +3,42 @@
 namespace Profile\Services;
 
 use \Profile\Repositories\Profile AS ProfileRepository;
-use \Auth;
+use \Profile\Entities\Profile AS ProfileEntity;
+use \Base\ErrorApi AS ErrorApi;
 use \Input;
 
 class Profile
 {
     public static function get($id=null)
     {
-        return ProfileRepository::get($id);
+        $data = (array)ProfileRepository::get($id);
+
+        if ($data === false || is_null($data) || !count($data)) {
+            ErrorApi::exception('Could not get a valid profile: '.$id, 'InvalidArgumentException');
+        }
+
+        return new ProfileEntity($data);        
     }
 
     /*
     |--------------------------------------------------------------------------
     | get_id_from_username()
     |--------------------------------------------------------------------------
-    | Receives a username to translate into an id. If the value received is already
-    | an integer, we simply format the response and send back the id, as there is
-    | no translation needed. 
+    | Receives a username to translate into an id. Has the ability to lookup an id
+    | as well. If the value received is already an integer (an id), we check to 
+    | see if the id exists in the system and format the response and send back the
+    | passed in id.
     |
     | @param:     $data - the username/id to look up
     | @return:    integer
     */
     public static function get_id_from_username($data)
     {
+        // Initialize the data.
+        $id_exists = false;
+
         // Received an integer, simply format the return and blast it off.
-        if (is_numeric($data)) {
+        if (is_numeric($data) && ProfileRepository::id_exists($data)) {
             return array(
                 'success' => true,
                 'code' => 0,
@@ -35,7 +46,21 @@ class Profile
             );            
         }
 
-        // Attempt to get the id from the repository
+        // If $id_exists is false, an integer was passed in, but the id doesn't
+        // exist in the DB.
+        if (is_numeric($data) && !$id_exists) {
+            ErrorApi::log('Profile/Account id does not exist: '.$data);
+            return array(
+                'success' => false,
+                'code'    => 1,
+                'payload' => null,
+                'message' => 'The requested Profile does not exist',
+            );
+            // TODO: Use Lang:: for the response message
+        }
+
+        // Attempt to get the id from the repository, since we're dealing with a
+        // username.
         $id = ProfileRepository::get_id_from_username($data);
 
         // If the $id returned is false, null or 0, we want to log the error
@@ -44,8 +69,10 @@ class Profile
             ErrorApi::log('Could not resolve id for username: '.$data);
             return array(
                 'success' => false,
-                'code' => 1,
+                'code' => 2,
                 'payload' => null,
+                'message' => 'The requested Profile does not exist',
+                // TODO: use Lang:: for the response message
             );
         }
 
@@ -57,20 +84,6 @@ class Profile
             'payload' => $id,
         );
     }
-
-
-
-
-    /*
-    public static function details($id=null)
-    {
-        $id = 5;
-        return array(
-            'name' => ProfileRepository::get_full_name($id),
-            'email' => ProfileRepository::get_email($id),
-        );
-    }
-    */
 
     public static function form($error_object=null)
     {

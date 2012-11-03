@@ -13,6 +13,7 @@ class Profile extends \Base\Repository {
 
     public static function get($id)
     {
+        // Initialize response
         $data = false;
 
         try {
@@ -20,15 +21,14 @@ class Profile extends \Base\Repository {
                 ->table('accounts')
                 ->where('id', '=', $id)
                 ->first();
-        } catch (\Exception $e) {
-            die('<pre>'.print_r($e,true));
+        }
+        // Thow an exception if we have a DB problem 
+        catch (\Exception $e) {
+            ErrorApi::exception('Database Problem: '.$e->getMessage());
         }
 
-        if ($data === false || is_null($data) || !count($data)) {
-            ErrorApi::exception('Testing exception throwing', 'InvalidArgumentException');
-        }
-
-        return new ProfileEntity((array)$data);
+        // Returning our data-grab.
+        return $data;
     }
 
     /*
@@ -62,12 +62,34 @@ class Profile extends \Base\Repository {
         return $data;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | id_exists()
+    |--------------------------------------------------------------------------
+    | Receives an integer to look up for existence in the accounts table.
+    |
+    | @param:     $id - the id to look up
+    | @return:    boolean
+    */
+    public static function id_exists($id)
+    {
+        // Initialize response
+        $data = false;
 
-public static function debug()
-{
-            die('<pre>'.print_r(debug_backtrace(),true).'</pre>');
+        // Try to get what we want
+        try {
+            $data = DB::connection('application_r')
+                ->table('accounts')
+                ->find($id);
+        }
+        // Throw an exception if we have a DB problem
+        catch (\Exception $e) {
+            ErrorApi::exception('Database problem: '.$e->getMessage());
+        }
 
-}
+        // Returning our data-grab.
+        return ($data);
+    }
 
     public static function save($input=null)
     {
