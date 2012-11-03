@@ -49,7 +49,7 @@ class Profile
         // If $id_exists is false, an integer was passed in, but the id doesn't
         // exist in the DB.
         if (is_numeric($data) && !$id_exists) {
-            ErrorApi::log('Profile/Account id does not exist: '.$data);
+            ErrorApi::log('Profile id does not exist: '.$data);
             return array(
                 'success' => false,
                 'code'    => 1,

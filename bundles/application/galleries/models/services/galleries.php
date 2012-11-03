@@ -18,9 +18,9 @@ class Galleries
         //return 
     }
 
-    public function by_account_id($id=null)
+    public function by_profile_id($id=null)
     {
-        return 'get()->by_account_id('.$id.')';
+        return 'get()->by_profile_id('.$id.')';
     }
 
     public static function form($error_object=null)

@@ -16,7 +16,7 @@ class Signup extends \Base\Repository {
 
         try {    
             $id = DB::connection('application_w')
-                ->table('accounts')
+                ->table('profiles')
                 ->insert_get_id(array(
                     'first_name' => $input['signup-first-name'],
                     'last_name' => $input['signup-last-name'],

@@ -20,6 +20,6 @@ Route::group(array('before'=>'auth'), function() {
 
         return View::make('galleries::galleries')            
             ->with('profile', ProfileService::get($id))
-            ->with('galleries', GalleriesService::get()->by_account_id($id));
+            ->with('galleries', GalleriesService::get()->by_profile_id($id));
     });
 });

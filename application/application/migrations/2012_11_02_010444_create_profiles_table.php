@@ -1,6 +1,6 @@
 <?php
 
-class Create_Accounts_Table {
+class Create_Profiles_Table {
 
 	/**
 	 * Make changes to the database.
@@ -10,7 +10,7 @@ class Create_Accounts_Table {
 	public function up()
 	{
 		// Creating the table
-		Schema::create('accounts', function($table) {
+		Schema::create('profiles', function($table) {
 			$table->on('application_schema');
 			$table->increments('id');
 			$table->string('first_name', 30)->default('');
@@ -26,7 +26,7 @@ class Create_Accounts_Table {
 
 		// Adding some records
 		DB::connection('application_schema')
-			->table('accounts')
+			->table('profiles')
 			->insert(array(
 				'first_name' => 'Thommy',
 				'last_name' => 'Thompson',
@@ -46,7 +46,7 @@ class Create_Accounts_Table {
 	 */
 	public function down()
 	{
-		Schema::drop('accounts');
+		Schema::drop('profiles');
 	}
 
 }

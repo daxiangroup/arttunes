@@ -17,7 +17,7 @@ class SignupValidator extends \Base\Validator
         $validation_rules = array(
             'signup-first-name'        => 'required|alpha',
             'signup-last-name'         => 'required|alpha',
-            'signup-email'             => 'required|email|unique:accounts,email',
+            'signup-email'             => 'required|email|unique:profiles,email',
             'signup-password'          => 'required',
             'signup-password-verify'   => 'required|same:signup-password',
             'signup-about-me'          => 'required',

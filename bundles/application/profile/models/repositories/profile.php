@@ -18,7 +18,7 @@ class Profile extends \Base\Repository {
 
         try {
             $data = DB::connection('application_r')
-                ->table('accounts')
+                ->table('profiles')
                 ->where('id', '=', $id)
                 ->first();
         }
@@ -49,7 +49,7 @@ class Profile extends \Base\Repository {
         // Try to get what we want
         try {
             $data = DB::connection('application_r')
-                ->table('accounts')
+                ->table('profiles')
                 ->where('username', '=', $username)
                 ->only('id');
         } 
@@ -66,7 +66,7 @@ class Profile extends \Base\Repository {
     |--------------------------------------------------------------------------
     | id_exists()
     |--------------------------------------------------------------------------
-    | Receives an integer to look up for existence in the accounts table.
+    | Receives an integer to look up for existence in the profiles table.
     |
     | @param:     $id - the id to look up
     | @return:    boolean
@@ -79,7 +79,7 @@ class Profile extends \Base\Repository {
         // Try to get what we want
         try {
             $data = DB::connection('application_r')
-                ->table('accounts')
+                ->table('profiles')
                 ->find($id);
         }
         // Throw an exception if we have a DB problem
@@ -99,7 +99,7 @@ class Profile extends \Base\Repository {
 
         try {    
             $id = DB::connection('application_w')
-                ->table('accounts')
+                ->table('profiles')
                 ->insert_get_id(array(
                     'first_name' => $input['signup-first-name'],
                     'last_name' => $input['signup-last-name'],
