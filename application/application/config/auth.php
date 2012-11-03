@@ -68,6 +68,6 @@ return array(
 	|
 	*/
 
-	'table' => 'accounts',
+	'table' => 'profiles',
 
 );
